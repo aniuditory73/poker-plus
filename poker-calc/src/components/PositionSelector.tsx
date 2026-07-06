@@ -13,16 +13,16 @@ export default function PositionSelector({ playerCount, selected, onSelect }: Pr
 
   return (
     <div>
-      <label className="block text-xs text-gray-400 mb-2">Позиция</label>
-      <div className="flex flex-wrap gap-2">
+      <label className="block text-xs text-gray-400 mb-2 font-medium">Позиция</label>
+      <div className="flex flex-wrap gap-1.5">
         {positions.map(pos => (
           <button
             key={pos}
             onClick={() => onSelect(pos)}
-            className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               selected === pos
-                ? 'bg-blue-600 text-white ring-2 ring-blue-400'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                ? 'bg-[#2d9cdb] text-white shadow-sm'
+                : 'bg-[#0f1923]/60 text-gray-400 hover:text-white hover:bg-[#2a4a5a]/30'
             }`}
           >
             {pos}

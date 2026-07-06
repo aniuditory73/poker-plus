@@ -26,31 +26,31 @@ export default function HistoryList({ history, onClear }: Props) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-bold text-gray-400">История раздач</h3>
+        <h3 className="text-xs text-gray-500 uppercase tracking-wider font-medium">История раздач</h3>
         <button
           onClick={onClear}
-          className="text-xs text-red-400 hover:text-red-300"
+          className="text-[11px] text-red-400/70 hover:text-red-400 transition-colors"
         >
           Очистить
         </button>
       </div>
-      <div className="space-y-1.5 max-h-60 overflow-y-auto">
+      <div className="space-y-1 max-h-60 overflow-y-auto">
         {history.map(h => (
           <div
             key={h.id}
-            className="bg-gray-800/50 rounded-lg px-3 py-2 flex items-center justify-between text-sm"
+            className="bg-[#1a2c38]/40 backdrop-blur-sm rounded-xl px-3 py-2 flex items-center justify-between text-sm border border-[#2a4a5a]/10"
           >
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-500">
+              <span className="text-[10px] text-gray-600">
                 {new Date(h.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
               <span className="text-gray-300 font-mono text-xs">
                 {h.holeCards ? h.holeCards.map(c => cardToString(c)).join(' ') : '??'}
               </span>
-              <span className="text-gray-500 text-xs">{h.position}</span>
-              <span className="text-gray-500 text-xs">{streetLabels[h.street]}</span>
+              <span className="text-gray-600 text-[10px]">{h.position}</span>
+              <span className="text-gray-600 text-[10px]">{streetLabels[h.street]}</span>
             </div>
-            <span className={`font-bold text-sm ${actionColors[h.recommendation.action]}`}>
+            <span className={`font-bold text-xs ${actionColors[h.recommendation.action]}`}>
               {h.recommendation.action.toUpperCase()}
             </span>
           </div>

@@ -38,53 +38,55 @@ export default function SessionStats({ history, currentStack, startingStack }: P
   const pnlColor = pnl >= 0 ? 'text-green-400' : 'text-red-400';
 
   return (
-    <div className="bg-gray-800/50 rounded-xl p-3 space-y-3">
-      <h3 className="text-sm font-bold text-gray-400">Статистика сессии</h3>
+    <div className="bg-[#1a2c38]/60 backdrop-blur-sm rounded-2xl p-4 border border-[#2a4a5a]/20 shadow-sm space-y-3">
+      <h3 className="text-xs text-gray-500 uppercase tracking-wider font-medium">Статистика сессии</h3>
 
       <div className="grid grid-cols-4 gap-2 text-center">
-        <div>
-          <div className="text-lg font-bold text-white">{total}</div>
-          <div className="text-xs text-gray-400">Раздач</div>
+        <div className="bg-[#0f1923]/40 rounded-xl py-2">
+          <div className="text-lg font-black text-white">{total}</div>
+          <div className="text-[10px] text-gray-500 uppercase tracking-wider">Всего</div>
         </div>
-        <div>
-          <div className="text-lg font-bold text-red-400">{total > 0 ? Math.round(folds / total * 100) : 0}%</div>
-          <div className="text-xs text-gray-400">Fold</div>
+        <div className="bg-[#0f1923]/40 rounded-xl py-2">
+          <div className="text-lg font-black text-red-400">{total > 0 ? Math.round(folds / total * 100) : 0}%</div>
+          <div className="text-[10px] text-gray-500 uppercase tracking-wider">Fold</div>
         </div>
-        <div>
-          <div className="text-lg font-bold text-yellow-400">{total > 0 ? Math.round(calls / total * 100) : 0}%</div>
-          <div className="text-xs text-gray-400">Call</div>
+        <div className="bg-[#0f1923]/40 rounded-xl py-2">
+          <div className="text-lg font-black text-yellow-400">{total > 0 ? Math.round(calls / total * 100) : 0}%</div>
+          <div className="text-[10px] text-gray-500 uppercase tracking-wider">Call</div>
         </div>
-        <div>
-          <div className="text-lg font-bold text-green-400">{total > 0 ? Math.round(raises / total * 100) : 0}%</div>
-          <div className="text-xs text-gray-400">Raise</div>
+        <div className="bg-[#0f1923]/40 rounded-xl py-2">
+          <div className="text-lg font-black text-green-400">{total > 0 ? Math.round(raises / total * 100) : 0}%</div>
+          <div className="text-[10px] text-gray-500 uppercase tracking-wider">Raise</div>
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
-        <span className="text-xs text-gray-400">Текущий стек:</span>
-        <span className={`text-lg font-bold ${pnlColor}`}>${currentStack}</span>
-        <span className={`text-xs ${pnlColor}`}>
-          {pnl >= 0 ? '+' : ''}{pnl}
-        </span>
+      <div className="flex items-center justify-between bg-[#0f1923]/40 rounded-xl px-3 py-2">
+        <span className="text-xs text-gray-500">Текущий стек</span>
+        <div className="flex items-center gap-2">
+          <span className={`text-lg font-black ${pnlColor}`}>${currentStack}</span>
+          <span className={`text-xs font-bold ${pnlColor}`}>
+            {pnl >= 0 ? '+' : ''}{pnl}
+          </span>
+        </div>
       </div>
 
       {hasStackData && (
         <div className="space-y-1">
-          <div className="text-xs text-gray-400">Изменение стека</div>
+          <div className="text-[10px] text-gray-500 uppercase tracking-wider">Изменение стека</div>
           <div className="flex items-end gap-0.5 h-12">
             {stackPoints.map((val, i) => {
               const height = ((val - minStack) / stackRange) * 100;
               return (
                 <div
                   key={i}
-                  className="flex-1 rounded-t"
+                  className="flex-1 rounded-sm"
                   style={{
                     height: `${Math.max(height, 3)}%`,
-                    backgroundColor: i === 0
-                      ? '#3b82f6'
+                    background: i === 0
+                      ? '#2d9cdb'
                       : val >= stackPoints[i - 1]
-                        ? '#22c55e'
-                        : '#ef4444',
+                        ? 'linear-gradient(to top, #22c55e, #16a34a)'
+                        : 'linear-gradient(to top, #ef4444, #dc2626)',
                   }}
                   title={`$${val}`}
                 />

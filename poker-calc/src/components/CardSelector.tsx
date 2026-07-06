@@ -47,45 +47,45 @@ export default function CardSelector({ label, value, onChange, exclude }: Props)
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <span className="text-xs text-gray-400">{label}</span>
+      <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">{label}</span>
 
       <button
         onClick={() => setSelecting(!selecting)}
-        className={`w-14 h-20 rounded-lg flex flex-col items-center justify-center transition-all select-none ${
+        className={`w-14 h-20 rounded-xl flex flex-col items-center justify-center transition-all select-none ${
           value
-            ? 'bg-white border border-gray-200 shadow-sm'
-            : 'bg-gray-700 border border-dashed border-gray-500 hover:border-gray-400'
+            ? 'bg-white shadow-md shadow-black/20 border border-gray-200/80'
+            : 'bg-[#0f1923]/60 border border-dashed border-[#2a4a5a]/40 hover:border-[#2d9cdb]/40'
         }`}
       >
         {value ? (
           <div className="relative w-full h-full">
-            <span className={`absolute top-0.5 left-1 text-[11px] font-bold leading-none ${value.suit === Suit.Hearts || value.suit === Suit.Diamonds ? 'text-red-500' : 'text-black'}`}>
+            <span className={`absolute top-0.5 left-1 text-[11px] font-bold leading-none ${value.suit === Suit.Hearts || value.suit === Suit.Diamonds ? 'text-red-500' : 'text-gray-900'}`}>
               {rankToString(value.rank)}
             </span>
-            <span className={`absolute inset-0 flex items-center justify-center text-lg leading-none ${value.suit === Suit.Hearts || value.suit === Suit.Diamonds ? 'text-red-500' : 'text-black'}`}>
+            <span className={`absolute inset-0 flex items-center justify-center text-lg leading-none ${value.suit === Suit.Hearts || value.suit === Suit.Diamonds ? 'text-red-500' : 'text-gray-900'}`}>
               {suitToSymbol(value.suit)}
             </span>
-            <span className={`absolute bottom-0.5 right-1 text-[11px] font-bold leading-none rotate-180 ${value.suit === Suit.Hearts || value.suit === Suit.Diamonds ? 'text-red-500' : 'text-black'}`}>
+            <span className={`absolute bottom-0.5 right-1 text-[11px] font-bold leading-none rotate-180 ${value.suit === Suit.Hearts || value.suit === Suit.Diamonds ? 'text-red-500' : 'text-gray-900'}`}>
               {rankToString(value.rank)}
             </span>
           </div>
         ) : (
-          <span className="text-gray-400 text-2xl font-light">?</span>
+          <span className="text-gray-500 text-xl font-light">?</span>
         )}
       </button>
 
       {selecting && (
-        <div className="bg-gray-800 rounded-xl p-3 space-y-3 shadow-xl border border-gray-700 w-full max-w-xs">
+        <div className="bg-[#1a2c38] rounded-2xl p-4 space-y-3 shadow-2xl border border-[#2a4a5a]/30 w-full max-w-xs">
           <div className="flex gap-2 justify-center">
             {SUITS.map(suit => (
               <button
                 key={suit}
                 onClick={() => handleSuitSelect(suit)}
-                className={`w-11 h-11 rounded-lg text-xl font-bold transition-all flex items-center justify-center ${
+                className={`w-11 h-11 rounded-xl text-xl font-bold transition-all flex items-center justify-center ${
                   selectedSuit === suit
-                    ? 'ring-2 ring-blue-400 scale-110'
-                    : 'hover:scale-105'
-                } bg-white ${suit === Suit.Hearts || suit === Suit.Diamonds ? 'text-red-500' : 'text-black'}`}
+                    ? 'ring-2 ring-[#2d9cdb] scale-110 bg-white'
+                    : 'hover:scale-105 bg-white/90'
+                } ${suit === Suit.Hearts || suit === Suit.Diamonds ? 'text-red-500' : 'text-gray-900'}`}
               >
                 {suitToSymbol(suit)}
               </button>
@@ -104,8 +104,8 @@ export default function CardSelector({ label, value, onChange, exclude }: Props)
                     disabled={excluded}
                     className={`py-2 rounded-lg text-sm font-bold transition-all ${
                       excluded
-                        ? 'bg-gray-600 text-gray-500 cursor-not-allowed'
-                        : 'bg-gray-700 text-white hover:bg-gray-600 hover:scale-105'
+                        ? 'bg-gray-700/30 text-gray-600 cursor-not-allowed'
+                        : 'bg-[#0f1923]/80 text-gray-200 hover:bg-[#2a4a5a]/40 hover:text-white'
                     }`}
                   >
                     {rankToString(rank)}
@@ -118,14 +118,14 @@ export default function CardSelector({ label, value, onChange, exclude }: Props)
           <div className="flex gap-2">
             <button
               onClick={() => { setSelecting(false); setSelectedSuit(null); }}
-              className="flex-1 py-1.5 rounded-lg text-sm bg-gray-700 text-gray-300 hover:bg-gray-600"
+              className="flex-1 py-1.5 rounded-xl text-sm bg-[#0f1923]/60 text-gray-400 hover:text-white transition-colors"
             >
               Отмена
             </button>
             {value && (
               <button
                 onClick={handleClear}
-                className="flex-1 py-1.5 rounded-lg text-sm bg-red-900 text-red-300 hover:bg-red-800"
+                className="flex-1 py-1.5 rounded-xl text-sm bg-red-900/30 text-red-400 hover:bg-red-900/50 transition-colors"
               >
                 Очистить
               </button>

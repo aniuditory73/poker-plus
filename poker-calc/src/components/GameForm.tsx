@@ -75,8 +75,8 @@ export default function GameForm({ playersCount, onCalculate, calculating }: Pro
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-xs text-gray-400 mb-2">Ваша рука</label>
-        <div className="flex justify-center gap-6">
+        <label className="block text-xs text-gray-400 mb-2 font-medium">Ваша рука</label>
+        <div className="flex justify-center gap-8">
           <CardSelector
             label="Карта 1"
             value={card1}
@@ -99,8 +99,8 @@ export default function GameForm({ playersCount, onCalculate, calculating }: Pro
       />
 
       <div>
-        <label className="block text-xs text-gray-400 mb-2">Стадия</label>
-        <div className="flex gap-1.5">
+        <label className="block text-xs text-gray-400 mb-2 font-medium">Стадия</label>
+        <div className="bg-[#0f1923]/60 rounded-xl p-1 flex gap-1">
           {([
             [Street.Preflop, 'PF'],
             [Street.Flop, 'FL'],
@@ -110,10 +110,10 @@ export default function GameForm({ playersCount, onCalculate, calculating }: Pro
             <button
               key={s}
               onClick={() => setStreet(s)}
-              className={`flex-1 py-2 rounded-lg text-xs font-bold transition-colors ${
+              className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
                 street === s
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+                  ? 'bg-[#2d9cdb] text-white shadow-sm'
+                  : 'text-gray-400 hover:text-white'
               }`}
             >
               {label}
@@ -124,7 +124,7 @@ export default function GameForm({ playersCount, onCalculate, calculating }: Pro
 
       {street !== Street.Preflop && (
         <div>
-          <label className="block text-xs text-gray-400 mb-2">Борд</label>
+          <label className="block text-xs text-gray-400 mb-2 font-medium">Борд</label>
           <div className="flex justify-center gap-2">
             {Array.from({ length: boardCount }).map((_, i) => {
               const setters = [setBoard1, setBoard2, setBoard3, setBoard4, setBoard5];
@@ -145,23 +145,23 @@ export default function GameForm({ playersCount, onCalculate, calculating }: Pro
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Банк ($)</label>
+          <label className="block text-xs text-gray-400 mb-1.5 font-medium">Банк ($)</label>
           <input
             type="number"
             value={potSize}
             onChange={e => setPotSize(e.target.value)}
             placeholder="120"
-            className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full bg-[#0f1923]/80 text-white rounded-xl px-3 py-2.5 text-sm border border-[#2a4a5a]/30 focus:border-[#2d9cdb] outline-none transition-colors"
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Ставка к коллу ($)</label>
+          <label className="block text-xs text-gray-400 mb-1.5 font-medium">Ставка к коллу ($)</label>
           <input
             type="number"
             value={betToCall}
             onChange={e => setBetToCall(e.target.value)}
             placeholder="50"
-            className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full bg-[#0f1923]/80 text-white rounded-xl px-3 py-2.5 text-sm border border-[#2a4a5a]/30 focus:border-[#2d9cdb] outline-none transition-colors"
           />
           <div className="flex gap-1 mt-1.5">
             {[
@@ -173,7 +173,7 @@ export default function GameForm({ playersCount, onCalculate, calculating }: Pro
               <button
                 key={label}
                 onClick={() => setBetFraction(f as number)}
-                className="flex-1 py-1 rounded text-xs bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors"
+                className="flex-1 py-1.5 rounded-lg text-xs font-bold bg-[#0f1923]/60 text-gray-300 hover:bg-[#2a4a5a]/40 hover:text-white transition-colors"
               >
                 {label}
               </button>
@@ -184,11 +184,11 @@ export default function GameForm({ playersCount, onCalculate, calculating }: Pro
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Агрессия стола</label>
+          <label className="block text-xs text-gray-400 mb-1.5 font-medium">Агрессия стола</label>
           <select
             value={aggression}
             onChange={e => setAggression(e.target.value as 'passive' | 'neutral' | 'aggressive')}
-            className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full bg-[#0f1923]/80 text-white rounded-xl px-3 py-2.5 text-sm border border-[#2a4a5a]/30 focus:border-[#2d9cdb] outline-none transition-colors"
           >
             <option value="passive">Пассивная</option>
             <option value="neutral">Нейтральная</option>
@@ -196,11 +196,11 @@ export default function GameForm({ playersCount, onCalculate, calculating }: Pro
           </select>
         </div>
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Действие оппонента</label>
+          <label className="block text-xs text-gray-400 mb-1.5 font-medium">Действие оппонента</label>
           <select
             value={opponentAction}
             onChange={e => setOpponentAction(e.target.value as OpponentAction)}
-            className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full bg-[#0f1923]/80 text-white rounded-xl px-3 py-2.5 text-sm border border-[#2a4a5a]/30 focus:border-[#2d9cdb] outline-none transition-colors"
           >
             {(['check', 'call', 'bet', 'raise', '3bet', 'allin'] as OpponentAction[]).map(a => (
               <option key={a} value={a}>{ACTION_LABELS[a]}</option>
@@ -210,24 +210,24 @@ export default function GameForm({ playersCount, onCalculate, calculating }: Pro
       </div>
 
       <div>
-        <label className="block text-xs text-gray-400 mb-1">Игроков в раздаче</label>
+        <label className="block text-xs text-gray-400 mb-1.5 font-medium">Игроков в раздаче</label>
         <input
           type="number"
           min={2}
           max={playersCount}
           value={remainingPlayers}
           onChange={e => setRemainingPlayers(Math.min(playersCount, Math.max(2, Number(e.target.value))))}
-          className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          className="w-full bg-[#0f1923]/80 text-white rounded-xl px-3 py-2.5 text-sm border border-[#2a4a5a]/30 focus:border-[#2d9cdb] outline-none transition-colors"
         />
       </div>
 
       <button
         onClick={handleCalculate}
         disabled={!card1 || !card2 || !position || calculating}
-        className={`w-full py-3 rounded-xl text-lg font-bold transition-all ${
+        className={`w-full py-3 rounded-xl text-base font-bold transition-all shadow-lg ${
           !card1 || !card2 || !position || calculating
-            ? 'bg-gray-600 text-gray-500 cursor-not-allowed'
-            : 'bg-blue-600 hover:bg-blue-700 text-white'
+            ? 'bg-gray-600/50 text-gray-500 cursor-not-allowed'
+            : 'bg-gradient-to-r from-[#2d9cdb] to-[#1b6d9b] hover:from-[#268cc7] hover:to-[#155d8a] text-white shadow-[#2d9cdb]/20'
         }`}
       >
         {calculating ? (

@@ -27,11 +27,15 @@ export default function Home() {
 
   if (!setupDone) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] p-4 flex items-center justify-center">
+      <div className="min-h-screen p-4 flex items-center justify-center"
+        style={{ background: 'radial-gradient(ellipse at center, #1a3a2a 0%, #0f1923 70%)' }}>
         <div className="w-full max-w-md">
-          <div className="text-center mb-6">
-            <h1 className="text-3xl font-black text-white">Poker+</h1>
-            <p className="text-gray-500 text-sm mt-1">Калькулятор покерных решений</p>
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#2d9cdb] to-[#1b4d3d] mb-4 shadow-lg shadow-[#2d9cdb]/20">
+              <span className="text-3xl font-black text-white">♠</span>
+            </div>
+            <h1 className="text-4xl font-black text-white tracking-tight">Poker+</h1>
+            <p className="text-gray-400 text-sm mt-1">Калькулятор покерных решений</p>
           </div>
           <SetupForm
             setup={setup}
@@ -44,42 +48,52 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] p-4 pb-20">
-      <div className="max-w-md mx-auto space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-black text-white">Poker+</h1>
-            <p className="text-xs text-gray-500">
-              Стек: ${setup.currentStack} | Стол: {setup.playersCount}-max
-            </p>
-          </div>
-          <div className="flex gap-1.5">
-            <button
-              onClick={() => { setSetupDone(false); }}
-              className="text-xs text-gray-400 hover:text-white bg-gray-800 px-2.5 py-1.5 rounded-lg"
-            >
-              Настройки
-            </button>
-            <button
-              onClick={newHand}
-              className="text-xs text-white bg-blue-600 hover:bg-blue-700 px-2.5 py-1.5 rounded-lg font-bold"
-            >
-              + Раздача
-            </button>
-            <button
-              onClick={() => { resetSession(); setSetupDone(false); }}
-              className="text-xs text-red-400 hover:text-red-300 bg-gray-800 px-2.5 py-1.5 rounded-lg"
-            >
-              Новая сессия
-            </button>
+    <div className="min-h-screen p-3 pb-24">
+      <div className="max-w-md mx-auto space-y-3">
+
+        <div className="backdrop-blur-xl bg-[#1a2c38]/80 rounded-2xl px-4 py-3 border border-[#2a4a5a]/30 shadow-lg">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#2d9cdb] to-[#1b4d3d] flex items-center justify-center shadow-sm">
+                <span className="text-sm font-black text-white">♠</span>
+              </div>
+              <div>
+                <h1 className="text-base font-black text-white tracking-tight">Poker+</h1>
+                <p className="text-[10px] text-gray-500">
+                  Стек ${setup.currentStack} · {setup.playersCount}-max
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-1.5">
+              <button
+                onClick={() => { setSetupDone(false); }}
+                className="text-[11px] text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1.5 rounded-lg transition-colors"
+              >
+                Настройки
+              </button>
+              <button
+                onClick={newHand}
+                className="text-[11px] text-white bg-[#2d9cdb] hover:bg-[#268cc7] px-2.5 py-1.5 rounded-lg font-bold transition-colors shadow-sm"
+              >
+                + Раздача
+              </button>
+              <button
+                onClick={() => { resetSession(); setSetupDone(false); }}
+                className="text-[11px] text-red-400 hover:text-red-300 bg-white/5 hover:bg-white/10 px-2.5 py-1.5 rounded-lg transition-colors"
+              >
+                Сброс
+              </button>
+            </div>
           </div>
         </div>
 
-        <GameForm
-          playersCount={setup.playersCount}
-          onCalculate={calculate}
-          calculating={calculating}
-        />
+        <div className="bg-[#1a2c38]/60 rounded-2xl p-4 border border-[#2a4a5a]/20 shadow-sm">
+          <GameForm
+            playersCount={setup.playersCount}
+            onCalculate={calculate}
+            calculating={calculating}
+          />
+        </div>
 
         {recommendation && (
           <RecommendationCard

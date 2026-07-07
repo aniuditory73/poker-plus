@@ -27,17 +27,17 @@ export default function HistoryList({ history, onClear }: Props) {
       </div>
       <div className="space-y-1 max-h-60 overflow-y-auto">
         {history.map(h => (
-          <div key={h.id} className="rounded-xl px-3 py-2 flex items-center justify-between text-sm border"
-            style={{ backgroundColor: 'color-mix(in srgb, var(--bg-card) 40%, transparent)', borderColor: 'color-mix(in srgb, var(--border) 10%, transparent)' }}>
+          <div key={h.id} className="rounded-xl px-3 py-2 flex items-center justify-between text-sm"
+            style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)' }}>
             <div className="flex items-center gap-2">
-              <span className="text-[10px]" style={{ color: 'color-mix(in srgb, var(--text-muted) 60%, transparent)' }}>
+              <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>
                 {new Date(h.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
               <span className="font-mono text-xs" style={{ color: 'var(--text)' }}>
                 {h.holeCards ? h.holeCards.map(c => cardToString(c)).join(' ') : '??'}
               </span>
-              <span className="text-[10px]" style={{ color: 'color-mix(in srgb, var(--text-muted) 60%, transparent)' }}>{h.position}</span>
-              <span className="text-[10px]" style={{ color: 'color-mix(in srgb, var(--text-muted) 60%, transparent)' }}>{streetLabels[h.street]}</span>
+              <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{h.position}</span>
+              <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{streetLabels[h.street]}</span>
             </div>
             <span className={`font-bold text-xs ${h.recommendation.action === 'fold' ? 'text-red-400' : 'text-green-400'}`}>
               {h.recommendation.action.toUpperCase()}

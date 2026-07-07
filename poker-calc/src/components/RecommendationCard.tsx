@@ -40,8 +40,8 @@ export default function RecommendationCard({ rec, handId, onRecordResult }: Prop
   };
 
   return (
-    <div className="rounded-2xl p-4 border shadow-sm space-y-3 backdrop-blur-sm"
-      style={{ backgroundColor: 'color-mix(in srgb, var(--bg-card) 60%, transparent)', borderColor: borderColors[rec.color] }}>
+    <div className="rounded-2xl p-4 shadow-sm space-y-3"
+      style={{ backgroundColor: 'var(--bg-card)', border: '1px solid ' + borderColors[rec.color] }}>
       <div className="text-center">
         <div className="inline-block px-8 py-3 rounded-2xl text-2xl font-black tracking-widest text-white shadow-lg"
           style={{ background: actionGradients[rec.color], boxShadow: `0 4px 15px ${borderColors[rec.color]}` }}>

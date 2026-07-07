@@ -56,10 +56,10 @@ export default function Home() {
     <div className="min-h-screen p-3 pb-24">
       <div className="max-w-md mx-auto space-y-3">
 
-        <div className="backdrop-blur-xl rounded-2xl px-4 py-3 border shadow-lg"
+        <div className="rounded-2xl px-4 py-3 shadow-lg"
           style={{
-            backgroundColor: 'color-mix(in srgb, var(--bg-card) 80%, transparent)',
-            borderColor: 'var(--card-border)',
+            backgroundColor: 'var(--bg-card)',
+            border: '1px solid var(--card-border)',
           }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -111,10 +111,10 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="rounded-2xl p-4 border shadow-sm"
+        <div className="rounded-2xl p-4 shadow-sm"
           style={{
-            backgroundColor: 'color-mix(in srgb, var(--bg-card) 60%, transparent)',
-            borderColor: 'var(--card-border)',
+            backgroundColor: 'var(--bg-card)',
+            border: '1px solid var(--card-border)',
           }}>
           <GameForm
             playersCount={setup.playersCount}

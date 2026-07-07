@@ -38,8 +38,8 @@ export default function SessionStats({ history, currentStack, startingStack }: P
   const pnlColor = pnl >= 0 ? 'text-green-400' : 'text-red-400';
 
   return (
-    <div className="rounded-2xl p-4 border shadow-sm space-y-3 backdrop-blur-sm"
-      style={{ backgroundColor: 'color-mix(in srgb, var(--bg-card) 60%, transparent)', borderColor: 'color-mix(in srgb, var(--border) 20%, transparent)' }}>
+    <div className="rounded-2xl p-4 shadow-sm space-y-3"
+      style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
       <h3 className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Статистика сессии</h3>
 
       <div className="grid grid-cols-4 gap-2 text-center">

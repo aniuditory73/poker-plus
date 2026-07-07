@@ -58,7 +58,7 @@ export default function CardSelector({ label, value, onChange, exclude }: Props)
             ? 'bg-white shadow-md shadow-black/20 border border-gray-200/80'
             : 'border border-dashed'
         }`}
-        style={value ? {} : { backgroundColor: 'var(--surface)', borderColor: 'color-mix(in srgb, var(--border) 40%, transparent)' }}
+        style={value ? {} : { backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}
       >
         {value ? (
           <div className="relative w-full h-full">
@@ -79,7 +79,7 @@ export default function CardSelector({ label, value, onChange, exclude }: Props)
 
       {selecting && (
         <div className="rounded-2xl p-4 space-y-3 shadow-2xl border w-full max-w-xs"
-          style={{ backgroundColor: 'var(--bg-card)', borderColor: 'color-mix(in srgb, var(--border) 30%, transparent)' }}>
+          style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}>
           <div className="flex gap-2 justify-center">
             {SUITS.map(suit => (
               <button

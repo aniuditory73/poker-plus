@@ -10,8 +10,8 @@ interface Props {
 
 export default function SetupForm({ setup, onUpdate, onDone }: Props) {
   return (
-    <div className="backdrop-blur-xl rounded-2xl p-5 border shadow-xl space-y-4"
-      style={{ backgroundColor: 'color-mix(in srgb, var(--bg-card) 80%, transparent)', borderColor: 'color-mix(in srgb, var(--border) 30%, transparent)' }}>
+    <div className="rounded-2xl p-5 shadow-xl space-y-4"
+      style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
       <h2 className="text-lg font-bold" style={{ color: 'var(--text)' }}>Настройки партии</h2>
 
       <div className="grid grid-cols-2 gap-3">

@@ -21,13 +21,15 @@ function isExcluded(card: Card, exclude?: Card[]): boolean {
   return exclude.some(c => c.suit === card.suit && c.rank === card.rank);
 }
 
+function cardColor(suit: Suit): string {
+  return suit === Suit.Hearts || suit === Suit.Diamonds ? 'text-red-500' : 'text-gray-900';
+}
+
 export default function CardSelector({ label, value, onChange, exclude }: Props) {
   const [selecting, setSelecting] = useState(false);
   const [selectedSuit, setSelectedSuit] = useState<Suit | null>(null);
 
-  const handleSuitSelect = (suit: Suit) => {
-    setSelectedSuit(suit);
-  };
+  const handleSuitSelect = (suit: Suit) => setSelectedSuit(suit);
 
   const handleRankSelect = (rank: Rank) => {
     if (!selectedSuit) return;
@@ -47,45 +49,44 @@ export default function CardSelector({ label, value, onChange, exclude }: Props)
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">{label}</span>
+      <span className="text-[10px] font-medium uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{label}</span>
 
       <button
         onClick={() => setSelecting(!selecting)}
         className={`w-14 h-20 rounded-xl flex flex-col items-center justify-center transition-all select-none ${
           value
             ? 'bg-white shadow-md shadow-black/20 border border-gray-200/80'
-            : 'bg-[#0f1923]/60 border border-dashed border-[#2a4a5a]/40 hover:border-[#2d9cdb]/40'
+            : 'border border-dashed'
         }`}
+        style={value ? {} : { backgroundColor: 'var(--surface)', borderColor: 'color-mix(in srgb, var(--border) 40%, transparent)' }}
       >
         {value ? (
           <div className="relative w-full h-full">
-            <span className={`absolute top-0.5 left-1 text-[11px] font-bold leading-none ${value.suit === Suit.Hearts || value.suit === Suit.Diamonds ? 'text-red-500' : 'text-gray-900'}`}>
+            <span className={`absolute top-0.5 left-1 text-[11px] font-bold leading-none ${cardColor(value.suit)}`}>
               {rankToString(value.rank)}
             </span>
-            <span className={`absolute inset-0 flex items-center justify-center text-lg leading-none ${value.suit === Suit.Hearts || value.suit === Suit.Diamonds ? 'text-red-500' : 'text-gray-900'}`}>
+            <span className={`absolute inset-0 flex items-center justify-center text-lg leading-none ${cardColor(value.suit)}`}>
               {suitToSymbol(value.suit)}
             </span>
-            <span className={`absolute bottom-0.5 right-1 text-[11px] font-bold leading-none rotate-180 ${value.suit === Suit.Hearts || value.suit === Suit.Diamonds ? 'text-red-500' : 'text-gray-900'}`}>
+            <span className={`absolute bottom-0.5 right-1 text-[11px] font-bold leading-none rotate-180 ${cardColor(value.suit)}`}>
               {rankToString(value.rank)}
             </span>
           </div>
         ) : (
-          <span className="text-gray-500 text-xl font-light">?</span>
+          <span className="text-xl font-light" style={{ color: 'var(--text-muted)' }}>?</span>
         )}
       </button>
 
       {selecting && (
-        <div className="bg-[#1a2c38] rounded-2xl p-4 space-y-3 shadow-2xl border border-[#2a4a5a]/30 w-full max-w-xs">
+        <div className="rounded-2xl p-4 space-y-3 shadow-2xl border w-full max-w-xs"
+          style={{ backgroundColor: 'var(--bg-card)', borderColor: 'color-mix(in srgb, var(--border) 30%, transparent)' }}>
           <div className="flex gap-2 justify-center">
             {SUITS.map(suit => (
               <button
                 key={suit}
                 onClick={() => handleSuitSelect(suit)}
-                className={`w-11 h-11 rounded-xl text-xl font-bold transition-all flex items-center justify-center ${
-                  selectedSuit === suit
-                    ? 'ring-2 ring-[#2d9cdb] scale-110 bg-white'
-                    : 'hover:scale-105 bg-white/90'
-                } ${suit === Suit.Hearts || suit === Suit.Diamonds ? 'text-red-500' : 'text-gray-900'}`}
+                className={`w-11 h-11 rounded-xl text-xl font-bold transition-all flex items-center justify-center bg-white ${cardColor(suit)}`}
+                style={selectedSuit === suit ? { boxShadow: '0 0 0 2px var(--accent)', transform: 'scale(1.1)' } : {}}
               >
                 {suitToSymbol(suit)}
               </button>
@@ -102,11 +103,13 @@ export default function CardSelector({ label, value, onChange, exclude }: Props)
                     key={rank}
                     onClick={() => handleRankSelect(rank)}
                     disabled={excluded}
-                    className={`py-2 rounded-lg text-sm font-bold transition-all ${
-                      excluded
-                        ? 'bg-gray-700/30 text-gray-600 cursor-not-allowed'
-                        : 'bg-[#0f1923]/80 text-gray-200 hover:bg-[#2a4a5a]/40 hover:text-white'
-                    }`}
+                    className="py-2 rounded-lg text-sm font-bold transition-all"
+                    style={{
+                      backgroundColor: excluded ? 'rgba(100,100,100,0.2)' : 'var(--surface)',
+                      color: excluded ? 'var(--text-muted)' : 'var(--text)',
+                      cursor: excluded ? 'not-allowed' : 'pointer',
+                      opacity: excluded ? 0.4 : 1,
+                    }}
                   >
                     {rankToString(rank)}
                   </button>
@@ -118,14 +121,16 @@ export default function CardSelector({ label, value, onChange, exclude }: Props)
           <div className="flex gap-2">
             <button
               onClick={() => { setSelecting(false); setSelectedSuit(null); }}
-              className="flex-1 py-1.5 rounded-xl text-sm bg-[#0f1923]/60 text-gray-400 hover:text-white transition-colors"
+              className="flex-1 py-1.5 rounded-xl text-sm transition-colors"
+              style={{ backgroundColor: 'var(--surface)', color: 'var(--text-secondary)' }}
             >
               Отмена
             </button>
             {value && (
               <button
                 onClick={handleClear}
-                className="flex-1 py-1.5 rounded-xl text-sm bg-red-900/30 text-red-400 hover:bg-red-900/50 transition-colors"
+                className="flex-1 py-1.5 rounded-xl text-sm transition-colors"
+                style={{ backgroundColor: 'rgba(127, 29, 29, 0.3)', color: '#f87171' }}
               >
                 Очистить
               </button>

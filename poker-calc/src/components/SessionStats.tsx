@@ -38,30 +38,26 @@ export default function SessionStats({ history, currentStack, startingStack }: P
   const pnlColor = pnl >= 0 ? 'text-green-400' : 'text-red-400';
 
   return (
-    <div className="bg-[#1a2c38]/60 backdrop-blur-sm rounded-2xl p-4 border border-[#2a4a5a]/20 shadow-sm space-y-3">
-      <h3 className="text-xs text-gray-500 uppercase tracking-wider font-medium">Статистика сессии</h3>
+    <div className="rounded-2xl p-4 border shadow-sm space-y-3 backdrop-blur-sm"
+      style={{ backgroundColor: 'color-mix(in srgb, var(--bg-card) 60%, transparent)', borderColor: 'color-mix(in srgb, var(--border) 20%, transparent)' }}>
+      <h3 className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Статистика сессии</h3>
 
       <div className="grid grid-cols-4 gap-2 text-center">
-        <div className="bg-[#0f1923]/40 rounded-xl py-2">
-          <div className="text-lg font-black text-white">{total}</div>
-          <div className="text-[10px] text-gray-500 uppercase tracking-wider">Всего</div>
-        </div>
-        <div className="bg-[#0f1923]/40 rounded-xl py-2">
-          <div className="text-lg font-black text-red-400">{total > 0 ? Math.round(folds / total * 100) : 0}%</div>
-          <div className="text-[10px] text-gray-500 uppercase tracking-wider">Fold</div>
-        </div>
-        <div className="bg-[#0f1923]/40 rounded-xl py-2">
-          <div className="text-lg font-black text-yellow-400">{total > 0 ? Math.round(calls / total * 100) : 0}%</div>
-          <div className="text-[10px] text-gray-500 uppercase tracking-wider">Call</div>
-        </div>
-        <div className="bg-[#0f1923]/40 rounded-xl py-2">
-          <div className="text-lg font-black text-green-400">{total > 0 ? Math.round(raises / total * 100) : 0}%</div>
-          <div className="text-[10px] text-gray-500 uppercase tracking-wider">Raise</div>
-        </div>
+        {[
+          ['Всего', total, 'var(--text)'],
+          ['Fold', total > 0 ? Math.round(folds / total * 100) + '%' : '0%', '#f87171'],
+          ['Call', total > 0 ? Math.round(calls / total * 100) + '%' : '0%', '#fbbf24'],
+          ['Raise', total > 0 ? Math.round(raises / total * 100) + '%' : '0%', '#34d399'],
+        ].map(([label, val, color]) => (
+          <div key={label as string} className="rounded-xl py-2" style={{ backgroundColor: 'var(--surface)' }}>
+            <div className="text-lg font-black" style={{ color: color as string }}>{val}</div>
+            <div className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{label as string}</div>
+          </div>
+        ))}
       </div>
 
-      <div className="flex items-center justify-between bg-[#0f1923]/40 rounded-xl px-3 py-2">
-        <span className="text-xs text-gray-500">Текущий стек</span>
+      <div className="flex items-center justify-between rounded-xl px-3 py-2" style={{ backgroundColor: 'var(--surface)' }}>
+        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Текущий стек</span>
         <div className="flex items-center gap-2">
           <span className={`text-lg font-black ${pnlColor}`}>${currentStack}</span>
           <span className={`text-xs font-bold ${pnlColor}`}>
@@ -72,7 +68,7 @@ export default function SessionStats({ history, currentStack, startingStack }: P
 
       {hasStackData && (
         <div className="space-y-1">
-          <div className="text-[10px] text-gray-500 uppercase tracking-wider">Изменение стека</div>
+          <div className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Изменение стека</div>
           <div className="flex items-end gap-0.5 h-12">
             {stackPoints.map((val, i) => {
               const height = ((val - minStack) / stackRange) * 100;
@@ -83,7 +79,7 @@ export default function SessionStats({ history, currentStack, startingStack }: P
                   style={{
                     height: `${Math.max(height, 3)}%`,
                     background: i === 0
-                      ? '#2d9cdb'
+                      ? 'var(--accent)'
                       : val >= stackPoints[i - 1]
                         ? 'linear-gradient(to top, #22c55e, #16a34a)'
                         : 'linear-gradient(to top, #ef4444, #dc2626)',

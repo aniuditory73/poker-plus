@@ -11,7 +11,7 @@ interface Props {
 export default function SetupForm({ setup, onUpdate, onDone }: Props) {
   return (
     <div className="rounded-2xl p-5 shadow-xl space-y-4"
-      style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+      style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', animation: 'slideUp 0.3s ease-out' }}>
       <h2 className="text-lg font-bold" style={{ color: 'var(--text)' }}>Настройки партии</h2>
 
       <div className="grid grid-cols-2 gap-3">

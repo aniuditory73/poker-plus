@@ -16,10 +16,12 @@
   --card-bg: #1a2c38;
   --card-border: #2a4a5a;
   --surface: rgba(15, 25, 35, 0.6);
+  --card-surface: #f5f0e8;
+  --card-shadow: rgba(0, 0, 0, 0.4);
 }
 
 [data-theme='light'] {
-  --bg: #f0f2f5;
+  --bg: #ebe9e3;
   --bg-card: #ffffff;
   --bg-input: #e8ecf0;
   --border: #d1d5db;
@@ -31,6 +33,17 @@
   --card-bg: #ffffff;
   --card-border: #e5e7eb;
   --surface: rgba(240, 242, 245, 0.8);
+  --card-surface: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.15);
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+html {
+  transition: color 0.3s;
 }
 
 body {
@@ -64,6 +77,41 @@ input[type="number"] {
 ::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideFade {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes cardDeal {
+  from { opacity: 0; transform: translateY(-30px) rotate(-8deg); }
+  to { opacity: 1; transform: translateY(0) rotate(0); }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 8px var(--accent-glow); }
+  50% { box-shadow: 0 0 16px var(--accent-glow), 0 0 24px var(--accent-glow); }
 }
 
 @layer utilities {

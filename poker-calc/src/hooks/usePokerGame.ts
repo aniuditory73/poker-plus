@@ -13,6 +13,7 @@ import {
   getRecommendation,
   clearEquityCache,
 } from '@/lib/poker';
+import { generateScenario, TrainerScenario } from '@/lib/poker/trainer';
 
 const DEFAULT_SETUP: GameSetup = {
   buyIn: 1000,
@@ -29,6 +30,12 @@ export function usePokerGame() {
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
   const [lastHandId, setLastHandId] = useState<string | null>(null);
   const [calculating, setCalculating] = useState(false);
+
+  const [trainerMode, setTrainerMode] = useState(false);
+  const [currentScenario, setCurrentScenario] = useState<TrainerScenario | null>(null);
+  const [trainerScore, setTrainerScore] = useState({ total: 0, correct: 0, streak: 0, bestStreak: 0 });
+  const [trainerState, setTrainerState] = useState<'idle' | 'playing' | 'answered'>('idle');
+  const [trainerCorrect, setTrainerCorrect] = useState<boolean | null>(null);
 
   const updateSetup = useCallback((newSetup: Partial<GameSetup>) => {
     setSetup(prev => ({ ...prev, ...newSetup }));
@@ -113,6 +120,32 @@ export function usePokerGame() {
     clearEquityCache();
   }, [setSetup, setHistory]);
 
+  const startTrainerRound = useCallback(() => {
+    const scenario = generateScenario();
+    setCurrentScenario(scenario);
+    setTrainerState('playing');
+    setTrainerCorrect(null);
+  }, []);
+
+  const submitTrainerAnswer = useCallback((action: 'fold' | 'call' | 'raise') => {
+    if (!currentScenario) return;
+    const correct = action === currentScenario.correctAction;
+    setTrainerCorrect(correct);
+    setTrainerScore(prev => ({
+      total: prev.total + 1,
+      correct: prev.correct + (correct ? 1 : 0),
+      streak: correct ? prev.streak + 1 : 0,
+      bestStreak: Math.max(prev.bestStreak, correct ? prev.streak + 1 : prev.bestStreak),
+    }));
+    setTrainerState('answered');
+  }, [currentScenario]);
+
+  const skipTrainer = useCallback(() => {
+    if (!currentScenario) return;
+    setTrainerCorrect(null);
+    setTrainerState('answered');
+  }, [currentScenario]);
+
   return {
     setup,
     updateSetup,
@@ -125,5 +158,14 @@ export function usePokerGame() {
     recordHandResult,
     lastHandId,
     resetSession,
+    trainerMode,
+    setTrainerMode,
+    currentScenario,
+    trainerScore,
+    trainerState,
+    trainerCorrect,
+    startTrainerRound,
+    submitTrainerAnswer,
+    skipTrainer,
   };
 }

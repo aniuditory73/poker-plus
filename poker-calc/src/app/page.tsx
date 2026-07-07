@@ -6,6 +6,7 @@ import GameForm from '@/components/GameForm';
 import RecommendationCard from '@/components/RecommendationCard';
 import HistoryList from '@/components/HistoryList';
 import SessionStats from '@/components/SessionStats';
+import SessionChart from '@/components/SessionChart';
 import ThemeToggle from '@/components/ThemeToggle';
 import { usePokerGame } from '@/hooks/usePokerGame';
 
@@ -131,6 +132,11 @@ export default function Home() {
           />
         )}
 
+        <SessionChart
+          history={history}
+          currentStack={setup.currentStack}
+          startingStack={setup.buyIn}
+        />
         <SessionStats
           history={history}
           currentStack={setup.currentStack}

@@ -9,6 +9,9 @@ import {
 } from '@/lib/poker';
 import CardSelector from './CardSelector';
 import PositionSelector from './PositionSelector';
+import { PresetInfo } from './HandPresets';
+import PresetSuitPicker from './PresetSuitPicker';
+import RangeGrid from './RangeGrid';
 
 interface Props {
   playersCount: number;
@@ -52,6 +55,8 @@ export default function GameForm({ playersCount, onCalculate, calculating }: Pro
   const [remainingPlayers, setRemainingPlayers] = useState(playersCount);
   const [aggression, setAggression] = useState<'passive' | 'neutral' | 'aggressive'>('neutral');
   const [opponentAction, setOpponentAction] = useState<OpponentAction>('bet');
+  const [showRange, setShowRange] = useState(false);
+  const [pendingPreset, setPendingPreset] = useState<PresetInfo | null>(null);
 
   const boardCards = (): Card[] => {
     const cards = [board1, board2, board3, board4, board5].filter(Boolean) as Card[];
@@ -92,6 +97,31 @@ export default function GameForm({ playersCount, onCalculate, calculating }: Pro
           <CardSelector label="Карта 1" value={card1} onChange={c => setCard1(c)} exclude={card2 ? [card2, ...boardCards()] : boardCards()} />
           <CardSelector label="Карта 2" value={card2} onChange={c => setCard2(c)} exclude={card1 ? [card1, ...boardCards()] : boardCards()} />
         </div>
+        <div className="flex justify-center mt-2">
+          <button
+            onClick={() => setShowRange(!showRange)}
+            className="px-4 py-1.5 rounded-lg text-xs font-bold transition-all"
+            style={{
+              backgroundColor: showRange ? 'var(--accent)' : 'var(--surface)',
+              color: showRange ? 'white' : 'var(--text-secondary)',
+            }}
+          >
+            Range
+          </button>
+        </div>
+        {showRange && !pendingPreset && (
+          <RangeGrid
+            onSelect={preset => setPendingPreset(preset)}
+            onClose={() => setShowRange(false)}
+          />
+        )}
+        {pendingPreset && (
+          <PresetSuitPicker
+            preset={pendingPreset}
+            onConfirm={(c1, c2) => { setCard1(c1); setCard2(c2); setPendingPreset(null); setShowRange(false); }}
+            onCancel={() => setPendingPreset(null)}
+          />
+        )}
       </div>
 
       <PositionSelector playerCount={playersCount} selected={position} onSelect={setPosition} />
